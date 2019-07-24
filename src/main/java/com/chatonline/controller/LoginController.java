@@ -1,14 +1,17 @@
 package com.chatonline.controller;
 
 import com.chatonline.base.component.Result;
+import com.chatonline.base.constant.LocalConstant;
 import com.chatonline.model.form.LoginForm;
 import com.chatonline.model.form.RegisterForm;
+import com.chatonline.model.vo.LoginVO;
 import com.chatonline.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author zening.zhu
@@ -23,8 +26,10 @@ public class LoginController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Result login(LoginForm loginForm) {
-        return Result.success(loginService.login(loginForm));
+    public Result login(HttpServletRequest request, LoginForm loginForm) {
+        LoginVO login = loginService.login(loginForm);
+        request.getSession().setAttribute(LocalConstant.WEBSOCKET_USERNAME_KEY,login.getUsername());
+        return Result.success(login);
     }
 
     @RequestMapping("/register")

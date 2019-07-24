@@ -1,4 +1,4 @@
-package com.chatonline.base.conf;
+package com.chatonline.base.handler;
 
 import com.chatonline.base.constant.LocalConstant;
 import org.springframework.http.server.ServerHttpRequest;
