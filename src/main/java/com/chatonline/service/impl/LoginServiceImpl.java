@@ -59,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
             if (password.equals(registerForm.getConfirmPassword())) {
                 User user = new User();
                 user.setUsername(username);
-                user.setPassword(password);
+                user.setPassword(MD5Util.generate(password));
                 userDao.insert(user);
             } else {
                 throw new BusinessException("两次密码不一致");

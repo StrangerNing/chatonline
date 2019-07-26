@@ -9,6 +9,7 @@ import com.chatonline.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +26,12 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping("/login")
-    @ResponseBody
-    public Result login(HttpServletRequest request, LoginForm loginForm) {
+    public ModelAndView login(HttpServletRequest request, LoginForm loginForm) {
         LoginVO login = loginService.login(loginForm);
         request.getSession().setAttribute(LocalConstant.WEBSOCKET_USERNAME_KEY,login.getUsername());
-        return Result.success(login);
+        ModelAndView modelAndView = new ModelAndView("chat.html");
+        modelAndView.addObject("user",login);
+        return modelAndView;
     }
 
     @RequestMapping("/register")
